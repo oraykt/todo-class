@@ -1,11 +1,17 @@
 const root = document.getElementById('root');
 
+const app = {
+  title: 'Todo Application',
+  description: 'Ex mollit labore nulla sit dolor.',
+  items: ['item 1','item 2', 'item 3']
+}
+
 class TodoApp extends React.Component{
   render() {
     return (
       <div>
-        <Header />
-        <TodoList />
+        <Header title={app.title} description={app.description}/>
+        <TodoList items={app.items} />
         <Action />
       </div>
     )
@@ -17,9 +23,9 @@ class Header extends React.Component{
   render() {
     return (
       <div>
-        <h1>Todo Application</h1>
+        <h1>{this.props.title}</h1>
         <p>
-          Culpa laborum amet id ipsum duis pariatur Lorem proident tempor.
+          {this.props.description}
         </p>
       </div>
     )
@@ -28,12 +34,16 @@ class Header extends React.Component{
 
 class TodoList extends React.Component{
   render() {
+    
     return (
-      <ul>
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
+      <div>
+        <ul>
+        {this.props.items.map((item, index) => <TodoItem key={index} item={item} />)}
       </ul>
+      <p>
+          <button>Clear Items</button>
+      </p>
+      </div>
     )
   }
 }
@@ -41,7 +51,7 @@ class TodoList extends React.Component{
 class TodoItem extends React.Component{
   render() {
     return (
-      <li> Todo Item</li>
+      <li>{this.props.item}</li>
       )
   }
 }
@@ -50,9 +60,6 @@ class Action extends React.Component{
   render() {
     return (
       <div>
-        <p>
-          <button>Clear Items</button>
-        </p>
         <form>
           <input type="text" name="txtItem" />
           <button type="submit">Add Item</button>
