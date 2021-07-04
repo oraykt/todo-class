@@ -1,47 +1,18 @@
 const root = document.getElementById('root');
 
-class Person{
-  constructor({firstName, lastName}) {
-    this.firstName = firstName
-    this.lastName = lastName
-  }
+// const Header = function (props) {
+//   console.log(props)
+//   return <h1>Hello React</h1>
+// }
 
-  get fullName() {
-    return this.firstName.concat(' ', this.lastName)
-  }
 
-  greeting() {
-    console.log('Hey there 👋');
+class Header extends React.Component{
+  render() {
+    // console.log(this.props)
+    return <h1> Hello React</h1>
   }
 }
 
-class Student extends Person{
-  constructor({ firstName, lastName, subject }) {
-    super({firstName, lastName})
-      this.subject = subject
-  }
+const template = <Header />
 
-  study() {
-    console.log(`I am studying ${this.subject}`)
-  }
-}
-
-class Teacher extends Person{
-  constructor({ firstName, lastName, seniority }) {
-    super({firstName, lastName})
-    this.seniority = seniority
-  }
-  
-  teach() {
-    console.log(`I am teaching ${this.seniority}`)
-  }
-}
-
-const p1 = new Student({ firstName: "Oray", lastName: "Kurt", subject: 'Math' })
-p1.study()
-const p2 = new Teacher({firstName: "tfName", lastName: 'tlName', seniority: 'Math' })
-p2.teach()
-// const template = <h1>Hello World</h1>
-
-// // ReactDOM
-// ReactDOM.render(template, root);
+ReactDOM.render(template, root);
