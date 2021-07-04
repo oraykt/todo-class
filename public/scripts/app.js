@@ -25,8 +25,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 var root = document.getElementById('root');
 var app = {
   title: 'Todo Application',
-  description: 'Ex mollit labore nulla sit dolor.',
-  items: ['item 1', 'item 2', 'item 3']
+  description: 'Ex mollit labore nulla sit dolor.'
 };
 
 var TodoApp = /*#__PURE__*/function (_React$Component) {
@@ -34,21 +33,66 @@ var TodoApp = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(TodoApp);
 
-  function TodoApp() {
+  function TodoApp(props) {
+    var _this;
+
     _classCallCheck(this, TodoApp);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.clearItems = _this.clearItems.bind(_assertThisInitialized(_this));
+    _this.addItem = _this.addItem.bind(_assertThisInitialized(_this));
+    _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_this));
+    _this.state = {
+      items: []
+    };
+    return _this;
   }
 
   _createClass(TodoApp, [{
+    key: "clearItems",
+    value: function clearItems() {
+      this.setState({
+        items: []
+      });
+    }
+  }, {
+    key: "addItem",
+    value: function addItem(item) {
+      if (this.state.items.indexOf(item) > -1) {
+        alert('You can not enter an item twice');
+        return false;
+      }
+
+      this.setState(function (prevState) {
+        return {
+          items: prevState.items.concat(item)
+        };
+      });
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(item) {
+      this.setState(function (prevState) {
+        return {
+          items: prevState.items.filter(function (i) {
+            return item !== i;
+          })
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Header, {
         title: app.title,
         description: app.description
       }), /*#__PURE__*/React.createElement(TodoList, {
-        items: app.items
-      }), /*#__PURE__*/React.createElement(Action, null));
+        items: this.state.items,
+        deleteItem: this.deleteItem,
+        clearItems: this.clearItems
+      }), /*#__PURE__*/React.createElement(Action, {
+        addItem: this.addItem
+      }));
     }
   }]);
 
@@ -90,12 +134,17 @@ var TodoList = /*#__PURE__*/function (_React$Component3) {
   _createClass(TodoList, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", null, this.props.items.map(function (item, index) {
         return /*#__PURE__*/React.createElement(TodoItem, {
           key: index,
-          item: item
+          item: item,
+          deleteItem: _this2.props.deleteItem
         });
-      })), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("button", null, "Clear Items")));
+      })), /*#__PURE__*/React.createElement("p", null, this.props.items.length !== 0 && /*#__PURE__*/React.createElement("button", {
+        onClick: this.props.clearItems
+      }, "Clear Items")));
     }
   }]);
 
@@ -107,16 +156,27 @@ var TodoItem = /*#__PURE__*/function (_React$Component4) {
 
   var _super4 = _createSuper(TodoItem);
 
-  function TodoItem() {
+  function TodoItem(props) {
+    var _this3;
+
     _classCallCheck(this, TodoItem);
 
-    return _super4.apply(this, arguments);
+    _this3 = _super4.call(this, props);
+    _this3.deleteItem = _this3.deleteItem.bind(_assertThisInitialized(_this3));
+    return _this3;
   }
 
   _createClass(TodoItem, [{
+    key: "deleteItem",
+    value: function deleteItem() {
+      this.props.deleteItem(this.props.item);
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("li", null, this.props.item);
+      return /*#__PURE__*/React.createElement("li", null, this.props.item, /*#__PURE__*/React.createElement("button", {
+        onClick: this.deleteItem
+      }, "x"));
     }
   }]);
 
@@ -128,16 +188,30 @@ var Action = /*#__PURE__*/function (_React$Component5) {
 
   var _super5 = _createSuper(Action);
 
-  function Action() {
+  function Action(props) {
+    var _this4;
+
     _classCallCheck(this, Action);
 
-    return _super5.apply(this, arguments);
+    _this4 = _super5.call(this, props);
+    _this4.onFormSubmit = _this4.onFormSubmit.bind(_assertThisInitialized(_this4));
+    return _this4;
   }
 
   _createClass(Action, [{
+    key: "onFormSubmit",
+    value: function onFormSubmit(event) {
+      event.preventDefault();
+      var item = event.target.elements.txtItem.value.trim();
+      item && this.props.addItem(item);
+      event.target.elements.txtItem.value = "";
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("input", {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
+        onSubmit: this.onFormSubmit
+      }, /*#__PURE__*/React.createElement("input", {
         type: "text",
         name: "txtItem"
       }), /*#__PURE__*/React.createElement("button", {

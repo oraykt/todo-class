@@ -3,16 +3,49 @@ const root = document.getElementById('root');
 const app = {
   title: 'Todo Application',
   description: 'Ex mollit labore nulla sit dolor.',
-  items: ['item 1','item 2', 'item 3']
 }
 
 class TodoApp extends React.Component{
+  constructor(props) {
+    super(props)
+    this.clearItems = this.clearItems.bind(this)
+    this.addItem = this.addItem.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
+    this.state = {
+      items: []
+    }
+  }
+
+  clearItems() {
+    this.setState({
+      items: []
+    })
+  }
+
+  addItem(item) {
+    if (this.state.items.indexOf(item) > -1) {
+      alert('You can not enter an item twice')
+      return false;
+    }
+    this.setState((prevState) => {
+      return { items: prevState.items.concat(item)}
+    })
+  }
+
+  deleteItem(item) {
+    this.setState((prevState) => {
+      return {
+        items: prevState.items.filter((i) => item !== i)
+      }
+    })
+  }
+
   render() {
     return (
       <div>
         <Header title={app.title} description={app.description}/>
-        <TodoList items={app.items} />
-        <Action />
+        <TodoList items={this.state.items} deleteItem={this.deleteItem} clearItems={this.clearItems}/>
+        <Action addItem={this.addItem}/>
       </div>
     )
   }
@@ -34,33 +67,55 @@ class Header extends React.Component{
 
 class TodoList extends React.Component{
   render() {
-    
     return (
       <div>
         <ul>
-        {this.props.items.map((item, index) => <TodoItem key={index} item={item} />)}
+          {this.props.items.map((item, index) => <TodoItem key={index} item={item} deleteItem={this.props.deleteItem} />)}
       </ul>
       <p>
-          <button>Clear Items</button>
+          {this.props.items.length !== 0 && <button onClick={this.props.clearItems}>Clear Items</button>}
       </p>
       </div>
     )
   }
 }
 
-class TodoItem extends React.Component{
+class TodoItem extends React.Component {
+  constructor(props) {
+    super(props)
+    this.deleteItem = this.deleteItem.bind(this)
+  }
+  deleteItem() {
+    this.props.deleteItem(this.props.item)
+  }
+
   render() {
     return (
-      <li>{this.props.item}</li>
+      <li>
+        {this.props.item}
+        <button onClick={this.deleteItem}>x</button>
+      </li>
       )
   }
 }
 
 class Action extends React.Component{
+  constructor(props) {
+    super(props)
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+  }
+
+  onFormSubmit(event) {
+    event.preventDefault();
+    const item = event.target.elements.txtItem.value.trim();
+    item && this.props.addItem(item)
+    event.target.elements.txtItem.value=""
+  }
+
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.onFormSubmit}>
           <input type="text" name="txtItem" />
           <button type="submit">Add Item</button>
         </form>
