@@ -49,6 +49,23 @@ var TodoApp = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(TodoApp, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var json = localStorage.getItem('items');
+      var items = JSON.parse(json);
+      items && this.setState({
+        items: items
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.items.length !== this.state.items.length) {
+        var items = JSON.stringify(this.state.items);
+        localStorage.setItem('items', items);
+      }
+    }
+  }, {
     key: "clearItems",
     value: function clearItems() {
       this.setState({

@@ -16,6 +16,18 @@ class TodoApp extends React.Component{
     }
   }
 
+  componentDidMount() {
+      const json = localStorage.getItem('items');
+      const items = JSON.parse(json)
+      items && this.setState({items})
+    }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.items.length !== this.state.items.length) {
+      const items = JSON.stringify(this.state.items)
+      localStorage.setItem('items', items)
+    }
+  }
   clearItems() {
     this.setState({
       items: []
@@ -85,6 +97,7 @@ class TodoItem extends React.Component {
     super(props)
     this.deleteItem = this.deleteItem.bind(this)
   }
+
   deleteItem() {
     this.props.deleteItem(this.props.item)
   }
@@ -92,7 +105,7 @@ class TodoItem extends React.Component {
   render() {
     return (
       <li>
-        {this.props.item}
+        {this.props.item} 
         <button onClick={this.deleteItem}>x</button>
       </li>
       )
