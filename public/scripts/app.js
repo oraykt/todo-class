@@ -22,32 +22,116 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var root = document.getElementById('root'); // const Header = function (props) {
-//   console.log(props)
-//   return <h1>Hello React</h1>
-// }
+var root = document.getElementById('root');
 
-var Header = /*#__PURE__*/function (_React$Component) {
-  _inherits(Header, _React$Component);
+var TodoApp = /*#__PURE__*/function (_React$Component) {
+  _inherits(TodoApp, _React$Component);
 
-  var _super = _createSuper(Header);
+  var _super = _createSuper(TodoApp);
+
+  function TodoApp() {
+    _classCallCheck(this, TodoApp);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(TodoApp, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Header, null), /*#__PURE__*/React.createElement(TodoList, null), /*#__PURE__*/React.createElement(Action, null));
+    }
+  }]);
+
+  return TodoApp;
+}(React.Component);
+
+var Header = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Header, _React$Component2);
+
+  var _super2 = _createSuper(Header);
 
   function Header() {
     _classCallCheck(this, Header);
 
-    return _super.apply(this, arguments);
+    return _super2.apply(this, arguments);
   }
 
   _createClass(Header, [{
     key: "render",
     value: function render() {
-      // console.log(this.props)
-      return /*#__PURE__*/React.createElement("h1", null, " Hello React");
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Todo Application"), /*#__PURE__*/React.createElement("p", null, "Culpa laborum amet id ipsum duis pariatur Lorem proident tempor."));
     }
   }]);
 
   return Header;
 }(React.Component);
 
-var template = /*#__PURE__*/React.createElement(Header, null);
-ReactDOM.render(template, root);
+var TodoList = /*#__PURE__*/function (_React$Component3) {
+  _inherits(TodoList, _React$Component3);
+
+  var _super3 = _createSuper(TodoList);
+
+  function TodoList() {
+    _classCallCheck(this, TodoList);
+
+    return _super3.apply(this, arguments);
+  }
+
+  _createClass(TodoList, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement(TodoItem, null), /*#__PURE__*/React.createElement(TodoItem, null), /*#__PURE__*/React.createElement(TodoItem, null));
+    }
+  }]);
+
+  return TodoList;
+}(React.Component);
+
+var TodoItem = /*#__PURE__*/function (_React$Component4) {
+  _inherits(TodoItem, _React$Component4);
+
+  var _super4 = _createSuper(TodoItem);
+
+  function TodoItem() {
+    _classCallCheck(this, TodoItem);
+
+    return _super4.apply(this, arguments);
+  }
+
+  _createClass(TodoItem, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("li", null, " Todo Item");
+    }
+  }]);
+
+  return TodoItem;
+}(React.Component);
+
+var Action = /*#__PURE__*/function (_React$Component5) {
+  _inherits(Action, _React$Component5);
+
+  var _super5 = _createSuper(Action);
+
+  function Action() {
+    _classCallCheck(this, Action);
+
+    return _super5.apply(this, arguments);
+  }
+
+  _createClass(Action, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("button", null, "Clear Items")), /*#__PURE__*/React.createElement("form", null, /*#__PURE__*/React.createElement("input", {
+        type: "text",
+        name: "txtItem"
+      }), /*#__PURE__*/React.createElement("button", {
+        type: "submit"
+      }, "Add Item")));
+    }
+  }]);
+
+  return Action;
+}(React.Component);
+
+ReactDOM.render( /*#__PURE__*/React.createElement(TodoApp, null), root);
