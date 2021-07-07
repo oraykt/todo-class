@@ -3,14 +3,18 @@ import React from 'react'
 const Action = (props) => {
   return (
       <div>
-      <form onSubmit={(event) => {
-        event.preventDefault();
-        const item = event.target.elements.txtItem.value.trim();
-        item && props.addItem(item)
-        event.target.elements.txtItem.value=""
+        <form onSubmit={(event) => {
+          event.preventDefault();
+          const item = event.target.elements.txtItem.value.trim();
+          item && props.addItem(item)
+          event.target.elements.txtItem.value=""
         }}>
-          <input type="text" name="txtItem" />
-          <button type="submit">Add Item</button>
+          <div className="input-group">
+            <input className="form-control" type="text" name="txtItem" placeholder="Please enter your Todo Item..."/>
+            <div className="input-group-append">
+              <button className="btn btn-primary" type="submit">Add Item</button>
+            </div>
+          </div>
         </form>
       </div>
     )

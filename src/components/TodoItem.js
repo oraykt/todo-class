@@ -2,9 +2,9 @@ import React from 'react'
 
 const TodoItem = (props) => {
   return (
-      <li>
+      <li className="list-group-item">
         {props.item} 
-      <button onClick={() => {
+      <button className="btn-danger float-right btn-sm" onClick={() => {
         props.deleteItem(props.item)
         }}>x</button>
       </li>

@@ -5,11 +5,13 @@ import TodoItem from './TodoItem'
 const TodoList = (props) => {
   return (
       <div>
-        <ul>
+        <ul className="list-group">
           {props.items.map((item, index) => <TodoItem key={index} item={item} deleteItem={props.deleteItem} />)}
       </ul>
       <p>
-          {props.items.length !== 0 && <button onClick={props.clearItems}>Clear Items</button>}
+        {props.items.length > 0 ?
+          <button className="btn btn-danger mt-3" onClick={props.clearItems}>Clear Items</button>
+        : <p className="alert alert-warning">Add item to start</p>}
       </p>
       </div>
     )

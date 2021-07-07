@@ -57,12 +57,19 @@ class TodoApp extends React.Component{
       title: 'Todo Application',
       description: 'Ex mollit labore nulla sit dolor.',
     }
-
     return (
-      <div className="bg-secondary">
-        <Header title={app.title} description={app.description}/>
-        <TodoList items={this.state.items} deleteItem={this.deleteItem} clearItems={this.clearItems}/>
-        <Action addItem={this.addItem}/>
+      <div className="container my-5">
+        <div className="card">
+          <div className="card-header">
+            <Header title={app.title} description={app.description}/>
+          </div>
+          <div className="card-body">
+            <TodoList items={this.state.items} deleteItem={this.deleteItem} clearItems={this.clearItems}/>
+          </div>
+          <div className="card-footer">
+            <Action addItem={this.addItem}/>
+          </div>
+        </div>
       </div>
     )
   }
