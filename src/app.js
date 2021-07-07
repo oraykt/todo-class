@@ -1,9 +1,7 @@
-const root = document.getElementById('root');
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-const app = {
-  title: 'Todo Application',
-  description: 'Ex mollit labore nulla sit dolor.',
-}
+const root = document.getElementById('root')
 
 class TodoApp extends React.Component{
   constructor(props) {
@@ -53,6 +51,11 @@ class TodoApp extends React.Component{
   }
 
   render() {
+    const app = {
+      title: 'Todo Application',
+      description: 'Ex mollit labore nulla sit dolor.',
+    }
+
     return (
       <div>
         <Header title={app.title} description={app.description}/>
