@@ -63,78 +63,140 @@ class TodoApp extends React.Component{
   }
 }
 
-
-class Header extends React.Component{
-  render() {
-    return (
+const Header = (props) => {
+  return (
       <div>
-        <h1>{this.props.title}</h1>
+        <h1>{props.title}</h1>
         <p>
-          {this.props.description}
+          {props.description}
         </p>
       </div>
     )
-  }
 }
 
-class TodoList extends React.Component{
-  render() {
-    return (
+// function Header(props) {
+//   return (
+//       <div>
+//         <h1>{props.title}</h1>
+//         <p>
+//           {props.description}
+//         </p>
+//       </div>
+//     )
+// }
+
+
+// class Header extends React.Component{
+//   render() {
+//     return (
+//       <div>
+//         <h1>{this.props.title}</h1>
+//         <p>
+//           {this.props.description}
+//         </p>
+//       </div>
+//     )
+//   }
+// }
+
+const TodoList = (props) => {
+  return (
       <div>
         <ul>
-          {this.props.items.map((item, index) => <TodoItem key={index} item={item} deleteItem={this.props.deleteItem} />)}
+          {props.items.map((item, index) => <TodoItem key={index} item={item} deleteItem={props.deleteItem} />)}
       </ul>
       <p>
-          {this.props.items.length !== 0 && <button onClick={this.props.clearItems}>Clear Items</button>}
+          {props.items.length !== 0 && <button onClick={props.clearItems}>Clear Items</button>}
       </p>
       </div>
     )
-  }
 }
 
-class TodoItem extends React.Component {
-  constructor(props) {
-    super(props)
-    this.deleteItem = this.deleteItem.bind(this)
-  }
+// class TodoList extends React.Component{
+//   render() {
+//     return (
+//       <div>
+//         <ul>
+//           {this.props.items.map((item, index) => <TodoItem key={index} item={item} deleteItem={this.props.deleteItem} />)}
+//       </ul>
+//       <p>
+//           {this.props.items.length !== 0 && <button onClick={this.props.clearItems}>Clear Items</button>}
+//       </p>
+//       </div>
+//     )
+//   }
+// }
 
-  deleteItem() {
-    this.props.deleteItem(this.props.item)
-  }
-
-  render() {
-    return (
+const TodoItem = (props) => {
+  return (
       <li>
-        {this.props.item} 
-        <button onClick={this.deleteItem}>x</button>
+        {props.item} 
+      <button onClick={() => {
+        props.deleteItem(props.item)
+        }}>x</button>
       </li>
       )
-  }
-}
+ }
 
-class Action extends React.Component{
-  constructor(props) {
-    super(props)
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-  }
+// class TodoItem extends React.Component {
+//   constructor(props) {
+//     super(props)
+//     this.deleteItem = this.deleteItem.bind(this)
+//   }
 
-  onFormSubmit(event) {
-    event.preventDefault();
-    const item = event.target.elements.txtItem.value.trim();
-    item && this.props.addItem(item)
-    event.target.elements.txtItem.value=""
-  }
+//   deleteItem() {
+//     this.props.deleteItem(this.props.item)
+//   }
 
-  render() {
-    return (
+//   render() {
+//     return (
+//       <li>
+//         {this.props.item} 
+//         <button onClick={this.deleteItem}>x</button>
+//       </li>
+//       )
+//   }
+// }
+
+const Action = (props) => {
+  return (
       <div>
-        <form onSubmit={this.onFormSubmit}>
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        const item = event.target.elements.txtItem.value.trim();
+        item && props.addItem(item)
+        event.target.elements.txtItem.value=""
+        }}>
           <input type="text" name="txtItem" />
           <button type="submit">Add Item</button>
         </form>
       </div>
     )
-  }
 }
+
+// class Action extends React.Component{
+//   constructor(props) {
+//     super(props)
+//     this.onFormSubmit = this.onFormSubmit.bind(this)
+//   }
+
+//   onFormSubmit(event) {
+//     event.preventDefault();
+//     const item = event.target.elements.txtItem.value.trim();
+//     item && this.props.addItem(item)
+//     event.target.elements.txtItem.value=""
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <form onSubmit={this.onFormSubmit}>
+//           <input type="text" name="txtItem" />
+//           <button type="submit">Add Item</button>
+//         </form>
+//       </div>
+//     )
+//   }
+// }
 
 ReactDOM.render(<TodoApp />, root);
