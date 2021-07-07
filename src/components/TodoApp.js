@@ -59,7 +59,7 @@ class TodoApp extends React.Component{
     }
 
     return (
-      <div>
+      <div className="bg-secondary">
         <Header title={app.title} description={app.description}/>
         <TodoList items={this.state.items} deleteItem={this.deleteItem} clearItems={this.clearItems}/>
         <Action addItem={this.addItem}/>
